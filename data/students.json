@@ -1,0 +1,44 @@
+[
+  {
+    "id": "27ded282-8e16-4526-95f5-e4ca7128f3af",
+    "name": "Aluno Teste",
+    "email": "aluno.teste@example.com",
+    "phone": "(11) 99999-9999",
+    "cep": "01001-000",
+    "address": "Rua Teste, 123 - Centro",
+    "goal": "Conversa��o",
+    "contractDuration": "6 meses",
+    "accessToken": "TA-3F39348C",
+    "status": "active",
+    "enrolledAt": "2026-04-10T15:08:32.889Z",
+    "updatedAt": "2026-04-10T15:08:32.889Z"
+  },
+  {
+    "id": "ddaf15a2-aef9-48d3-983a-7e50cc18292c",
+    "name": "Teste SMTP",
+    "email": "teste.smtp@example.com",
+    "phone": "(11) 98888-7777",
+    "cep": "01001-000",
+    "address": "Rua Exemplo, 100 - Centro",
+    "goal": "Gram�tica",
+    "contractDuration": "3 meses",
+    "accessToken": "TA-B246E544",
+    "status": "active",
+    "enrolledAt": "2026-04-10T15:16:01.318Z",
+    "updatedAt": "2026-04-10T15:16:01.318Z"
+  },
+  {
+    "id": "30d172ff-e693-4015-914f-11fbfe48ad9f",
+    "name": "Teste Pacote",
+    "email": "pacote.teste@example.com",
+    "phone": "(11) 97777-6666",
+    "cep": "02020-000",
+    "address": "Av. Central, 55",
+    "goal": "Conversa��o",
+    "contractDuration": "1 ano",
+    "accessToken": "TA-75C69AA2",
+    "status": "active",
+    "enrolledAt": "2026-04-10T16:07:33.776Z",
+    "updatedAt": "2026-04-10T16:07:33.776Z"
+  }
+]

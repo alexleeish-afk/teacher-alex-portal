@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Alex - Aprenda Inglês</title>
+    <link rel="icon" type="image/png" href="img/foto-profissional.png">
+    <link rel="apple-touch-icon" href="img/foto-profissional.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="img/foto-profissional.png" alt="Foto do Teacher Alex" class="logo-img">
+                <span>Teacher Alex</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#">Início</a></li>
+                <li><a href="#exercicios">Área de Alunos</a></li>
+                <li><a href="#videoaulas">Videoaulas</a></li>
+                <li><a href="#contato">Contato</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#matricula" class="nav-btn">Matricule-se</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Aprenda Inglês com o Teacher Alex</h1>
+                <p>Plataforma completa com área de alunos, acesso por token exclusivo e integração com o portal agendaweb.org para prática contínua.</p>
+                <div class="hero-buttons">
+                    <a href="#matricula" class="btn btn-primary">Matricule-se Agora</a>
+                    <a href="#exercicios" class="btn btn-secondary">Área de Alunos</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="img/foto-profissional.png" alt="Teacher Alex">
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Area Section -->
+    <section class="student-area" id="exercicios">
+        <div class="student-area-container">
+            <div class="student-area-header">
+                <span class="section-badge">Área de Alunos</span>
+                <h2>Acesso exclusivo com matrícula ou token</h2>
+                <p>Ao se matricular ou validar o token enviado pelo professor, o aluno recebe liberação imediata para entrar na área de membros e acessar os exercícios do Agendaweb.</p>
+            </div>
+
+            <div class="student-area-grid">
+                <div class="student-info-card">
+                    <h3>Como funciona o acesso</h3>
+                    <ul class="student-benefits">
+                        <li>Preencha a matrícula com seus dados de contato</li>
+                        <li>O cadastro é enviado para o e-mail teacherr.alex@gmail.com</li>
+                        <li>O acesso à área de membros é liberado automaticamente após a confirmação</li>
+                    </ul>
+
+                    <div class="portal-note">
+                        <strong>Integração ativa:</strong> após validar o token ou concluir a matrícula, o aluno poderá acessar o portal <a href="https://agendaweb.org/" target="_blank" rel="noopener noreferrer">agendaweb.org</a> em uma nova aba.
+                    </div>
+                </div>
+
+                <div class="student-access-card">
+                    <h3>Área de membros</h3>
+                    <p class="access-helper">Se você acabou de se matricular, o acesso será liberado automaticamente. Se preferir, também pode usar um token manual.</p>
+                    <form id="studentAccessForm" class="student-form">
+                        <label for="studentName">Nome do aluno</label>
+                        <input type="text" id="studentName" name="studentName" placeholder="Digite seu nome completo">
+
+                        <label for="studentEmail">E-mail</label>
+                        <input type="email" id="studentEmail" name="studentEmail" placeholder="Digite seu melhor e-mail">
+
+                        <label for="studentToken">Token fornecido pelo professor</label>
+                        <input type="text" id="studentToken" name="studentToken" placeholder="Digite o token recebido">
+
+                        <button type="submit" class="btn btn-primary">Validar token e acessar</button>
+                    </form>
+
+                    <p id="accessMessage" class="access-message"></p>
+
+                    <div id="agendawebAccess" class="agendaweb-access hidden">
+                        <p id="studentWelcome"></p>
+                        <div id="memberTokenBox" class="member-token-box hidden">
+                            <strong>Seu token de acesso:</strong>
+                            <span id="memberTokenValue"></span>
+                        </div>
+                        <div class="portal-actions">
+                            <a href="https://agendaweb.org/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Abrir portal Agendaweb</a>
+                            <a href="#matricula" class="btn btn-secondary">Falar com o professor</a>
+                        </div>
+                        <div class="portal-links">
+                            <a href="https://agendaweb.org/grammar-exercises.html" target="_blank" rel="noopener noreferrer">Grammar</a>
+                            <a href="https://agendaweb.org/vocabulary-exercises.html" target="_blank" rel="noopener noreferrer">Vocabulary</a>
+                            <a href="https://agendaweb.org/verbs-exercises.html" target="_blank" rel="noopener noreferrer">Verbs</a>
+                            <a href="https://agendaweb.org/listening-exercises.html" target="_blank" rel="noopener noreferrer">Listening</a>
+                            <a href="https://agendaweb.org/reading-exercises.html" target="_blank" rel="noopener noreferrer">Reading</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enrollment Section -->
+    <section class="cta" id="matricula">
+        <div class="cta-container cta-layout">
+            <div class="cta-copy">
+                <h2>Faça sua matrícula e receba acesso imediato</h2>
+                <p>Ao enviar seus dados, o cadastro é encaminhado para <strong>teacherr.alex@gmail.com</strong> e a área de membros é liberada automaticamente.</p>
+                <ul class="cta-list">
+                    <li>Matrícula rápida e online</li>
+                    <li>Envio do cadastro para o e-mail do professor</li>
+                    <li>Acesso direto ao portal com exercícios do Agendaweb</li>
+                </ul>
+
+                <div class="packages-grid">
+                    <div class="package-card">
+                        <h3>1 aula por semana</h3>
+                        <p class="package-price">R$ 250,00 <span>mensais</span></p>
+                    </div>
+                    <div class="package-card featured">
+                        <h3>2 aulas por semana</h3>
+                        <p class="package-price">R$ 400,00 <span>mensais</span></p>
+                    </div>
+                    <div class="package-card">
+                        <h3>3 aulas por semana</h3>
+                        <p class="package-price">R$ 600,00 <span>mensais</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="enrollment-card">
+                <h3>Formulário de matrícula</h3>
+                <form id="enrollmentForm" class="enrollment-form">
+                    <label for="enrollName">Nome completo</label>
+                    <input type="text" id="enrollName" name="enrollName" placeholder="Digite seu nome completo">
+
+                    <label for="enrollEmail">E-mail</label>
+                    <input type="email" id="enrollEmail" name="enrollEmail" placeholder="Digite seu e-mail">
+
+                    <label for="enrollPhone">WhatsApp</label>
+                    <input type="text" id="enrollPhone" name="enrollPhone" placeholder="(00) 00000-0000">
+
+                    <label for="enrollCep">CEP</label>
+                    <input type="text" id="enrollCep" name="enrollCep" placeholder="00000-000">
+
+                    <label for="enrollAddress">Endereço completo</label>
+                    <input type="text" id="enrollAddress" name="enrollAddress" placeholder="Rua, número, bairro, cidade e estado">
+
+                    <label for="enrollGoal">Objetivo</label>
+                    <input type="text" id="enrollGoal" name="enrollGoal" placeholder="Ex.: conversação, gramática, provas">
+
+                    <label for="contractDuration">Tempo de contrato desejado</label>
+                    <select id="contractDuration" name="contractDuration">
+                        <option value="">Selecione uma opção</option>
+                        <option value="3 meses">3 meses</option>
+                        <option value="6 meses">6 meses</option>
+                        <option value="1 ano">1 ano</option>
+                    </select>
+
+                    <label for="selectedPackage">Pacote de aulas</label>
+                    <select id="selectedPackage" name="selectedPackage">
+                        <option value="">Selecione um pacote</option>
+                        <option value="1 aula por semana - R$ 250,00 mensais">1 aula por semana - R$ 250,00 mensais</option>
+                        <option value="2 aulas por semana - R$ 400,00 mensais">2 aulas por semana - R$ 400,00 mensais</option>
+                        <option value="3 aulas por semana - R$ 600,00 mensais">3 aulas por semana - R$ 600,00 mensais</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-cta">Matricular e liberar acesso</button>
+                </form>
+                <p id="enrollmentMessage" class="enrollment-message"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2024 Teacher Alex. Todos os direitos reservados.</p>
+            <p class="footer-credit">Exercícios fornecidos por agendaweb.org</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

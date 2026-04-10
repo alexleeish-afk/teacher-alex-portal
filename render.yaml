@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: teacher-alex-portal
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.17.0
+      - key: PORT
+        value: 10000
