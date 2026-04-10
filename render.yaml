@@ -11,3 +11,7 @@ services:
         value: 22.17.0
       - key: PORT
         value: 10000
+      - key: NOTIFY_EMAIL
+        value: teacherr.alex@gmail.com
+      - key: SESSION_SECRET
+        generateValue: true
