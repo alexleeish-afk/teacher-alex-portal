@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
@@ -12,9 +13,32 @@ const ROOT_DIR = __dirname;
 const DATA_DIR = path.join(ROOT_DIR, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'students.json');
 const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'teacherr.alex@gmail.com';
+const isProduction = process.env.NODE_ENV === 'production';
+const allowedOrigins = (process.env.FRONTEND_ORIGINS || '')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+const corsOptions = {
+    origin(origin, callback) {
+        if (!origin) {
+            callback(null, true);
+            return;
+        }
+
+        if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+            callback(null, true);
+            return;
+        }
+
+        callback(new Error('Origin not allowed by CORS'));
+    },
+    credentials: true,
+};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
 app.use(
     session({
         secret: process.env.SESSION_SECRET || 'teacher-alex-session-secret-change-me',
@@ -22,7 +46,8 @@ app.use(
         saveUninitialized: false,
         cookie: {
             httpOnly: true,
-            sameSite: 'lax',
+            sameSite: isProduction ? 'none' : 'lax',
+            secure: isProduction,
             maxAge: 1000 * 60 * 60 * 24 * 7,
         },
     })

@@ -10,6 +10,7 @@ const memberTokenBox = document.getElementById('memberTokenBox');
 const memberTokenValue = document.getElementById('memberTokenValue');
 const accessSubmitButton = studentAccessForm?.querySelector('button[type="submit"]');
 const enrollmentSubmitButton = enrollmentForm?.querySelector('button[type="submit"]');
+const configuredApiBase = (window.TEACHER_ALEX_API_BASE_URL || '').trim().replace(/\/+$/, '');
 
 if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
@@ -79,7 +80,12 @@ function hideMemberArea() {
 }
 
 async function requestJson(url, options = {}) {
+    const targetUrl = url.startsWith('/')
+        ? (configuredApiBase ? `${configuredApiBase}${url}` : url)
+        : url;
+
     const config = {
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             ...(options.headers || {}),
@@ -87,7 +93,7 @@ async function requestJson(url, options = {}) {
         ...options,
     };
 
-    const response = await fetch(url, config);
+    const response = await fetch(targetUrl, config);
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {

@@ -10,10 +10,14 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 22.17.0
+      - key: NODE_ENV
+        value: production
       - key: NOTIFY_EMAIL
         value: teacherr.alex@gmail.com
       - key: SESSION_SECRET
         generateValue: true
+      - key: FRONTEND_ORIGINS
+        value: https://teacher-alex-portal-afk.netlify.app
       - key: SMTP_HOST
         value: smtp.gmail.com
       - key: SMTP_PORT
