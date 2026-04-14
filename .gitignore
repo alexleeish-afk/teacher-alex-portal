@@ -1,3 +1,6 @@
 node_modules/
 .env
 data/*.log
+
+# Local Netlify folder
+.netlify
