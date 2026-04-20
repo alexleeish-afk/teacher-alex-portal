@@ -394,7 +394,7 @@
         // =============================================
 
         const TEACHER_PEER_ID = 'teacher-alex-sala-principal';
-        const PROFESSOR_PASSWORD = 'alex2024'; // Altere essa senha
+        const PROFESSOR_PASSWORD = 'ALEX2026'; // Altere essa senha
 
         let peer = null;
         let localStream = null;
@@ -435,8 +435,8 @@
         loginPassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
 
         function doLogin() {
-            const pwd = loginPassword.value.trim();
-            if (pwd === 'alex2024') {
+            const pwd = loginPassword.value.trim().toUpperCase();
+            if (pwd === 'ALEX2026') {
                 loginOverlay.classList.add('hidden');
                 panelHeader.style.display = 'flex';
                 panelGrid.style.display = 'grid';
