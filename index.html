@@ -466,49 +466,21 @@
 
                         <!-- ABA: AULA AO VIVO -->
                         <div id="tab-aula-ao-vivo" class="tab-content">
-                            <div class="live-class-container">
+                            <div class="live-class-container" style="text-align:center; padding: 40px 20px;">
                                 <h3 class="module-title">🎥 Aula ao Vivo com Teacher Alex</h3>
-                                <p class="module-subtitle">Tecnologia WebRTC — sem limite de tempo</p>
+                                <p class="module-subtitle" style="margin-bottom: 24px;">Clique no botão abaixo para abrir a sala de aula em uma nova janela dedicada.</p>
 
-                                <div class="live-status-bar">
-                                    <span id="liveStatusDot" class="status-dot offline"></span>
-                                    <span id="liveStatusText">Clique em "Entrar na Sala" para começar.</span>
-                                </div>
+                                <button id="btnOpenLiveWindow" class="btn btn-primary" style="font-size:1.1rem; padding: 16px 40px; border-radius: 12px; cursor: pointer;">
+                                    🚀 Abrir Sala de Aula ao Vivo
+                                </button>
 
-                                <div class="video-grid" id="videoGrid">
-                                    <div class="video-wrapper">
-                                        <video id="localVideo" autoplay muted playsinline></video>
-                                        <span class="video-label">Você</span>
-                                    </div>
-                                    <div class="video-wrapper">
-                                        <video id="remoteVideo" autoplay playsinline></video>
-                                        <span class="video-label">Teacher Alex</span>
-                                    </div>
-                                </div>
-
-                                <div class="live-controls">
-                                    <button id="btnJoinRoom" class="live-btn btn-join">🚀 Entrar na Sala</button>
-                                    <button id="btnStartCam" class="live-btn btn-cam" disabled>📷 Ativar Câmera</button>
-                                    <button id="btnMuteMic" class="live-btn btn-mic" disabled>🎤 Microfone ON</button>
-                                    <button id="btnMuteVideo" class="live-btn btn-vid" disabled>📹 Vídeo ON</button>
-                                    <button id="btnFullscreen" class="live-btn btn-full" disabled>🖥️ Tela Cheia</button>
-                                    <button id="btnLeaveRoom" class="live-btn btn-leave hidden">❌ Sair da Aula</button>
-                                </div>
-
-                                <div class="chat-area">
-                                    <h4>💬 Chat da aula</h4>
-                                    <div id="chatMessages" class="chat-messages"></div>
-                                    <div class="chat-input-row">
-                                        <input type="text" id="chatInput" placeholder="Digite uma mensagem...">
-                                        <button id="btnSendChat" class="live-btn btn-join">Enviar</button>
-                                    </div>
-                                </div>
-
-                                <div class="live-info-box">
-                                    <p>⚠️ <strong>Passo 1:</strong> Clique em "Entrar na Sala" para conectar.</p>
-                                    <p>⚠️ <strong>Passo 2:</strong> Ative a câmera/áudio quando quiser participar.</p>
-                                    <p>🖥️ Use "Tela Cheia" para melhor visualização.</p>
-                                    <p>📋 <strong>Seu ID:</strong> <span id="roomIdDisplay" class="room-id">—</span></p>
+                                <div style="margin-top: 30px; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
+                                    <p style="margin-bottom: 10px;"><strong>Como funciona:</strong></p>
+                                    <p style="color: #94a3b8; margin-bottom: 8px;">1️⃣ Clique no botão acima — uma nova janela será aberta.</p>
+                                    <p style="color: #94a3b8; margin-bottom: 8px;">2️⃣ Na nova janela, clique em <strong>"Entrar na Sala"</strong> para conectar.</p>
+                                    <p style="color: #94a3b8; margin-bottom: 8px;">3️⃣ Ative sua <strong>câmera e microfone</strong> para participar.</p>
+                                    <p style="color: #94a3b8; margin-bottom: 8px;">4️⃣ Use <strong>"Tela Cheia"</strong> para melhor visualização.</p>
+                                    <p style="color: #94a3b8;">💬 O chat lateral permite trocar mensagens durante a aula.</p>
                                 </div>
                             </div>
                         </div>

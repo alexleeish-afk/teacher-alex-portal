@@ -215,4 +215,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ===== ABRIR AULA AO VIVO EM NOVA JANELA =====
+    const btnOpenLiveWindow = document.getElementById('btnOpenLiveWindow');
+    if (btnOpenLiveWindow) {
+        btnOpenLiveWindow.addEventListener('click', () => {
+            const saved = JSON.parse(localStorage.getItem('teacherAlexAccess') || '{}');
+            if (!saved.enrolled || !saved.name) {
+                alert('⚠️ Você precisa estar logado na área de membros para acessar a aula ao vivo.');
+                return;
+            }
+            window.open('aula-ao-vivo.html', 'AulaAoVivo', 'width=1200,height=750,menubar=no,toolbar=no,location=no,status=no');
+        });
+    }
+
 });

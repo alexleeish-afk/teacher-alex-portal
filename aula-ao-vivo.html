@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula ao Vivo — Teacher Alex</title>
+    <link rel="icon" type="image/png" href="img/foto-profissional.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .live-header {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .live-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .live-header img {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #2563eb;
+        }
+        .live-header h1 { font-size: 1.1rem; }
+        .live-header span { color: #94a3b8; font-size: 0.8rem; }
+        .btn-back {
+            padding: 8px 18px;
+            background: #334155;
+            color: #e2e8f0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        .btn-back:hover { background: #475569; }
+
+        /* LAYOUT */
+        .live-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            height: calc(100vh - 69px);
+        }
+        @media (max-width: 900px) {
+            .live-layout { grid-template-columns: 1fr; grid-template-rows: auto 300px; }
+        }
+
+        /* VÍDEO */
+        .video-area { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+
+        .live-status-bar {
+            display: flex; align-items: center; gap: 10px;
+            background: #1e293b; border: 1px solid #334155;
+            border-radius: 10px; padding: 10px 16px;
+            font-weight: 600; font-size: 0.9rem;
+        }
+        .status-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+        .status-dot.offline { background: #6b7280; }
+        .status-dot.waiting { background: #f59e0b; animation: pulse 1.5s infinite; }
+        .status-dot.live { background: #22c55e; animation: pulse 1s infinite; }
+        @keyframes pulse {
+            0%,100% { opacity:1; transform:scale(1); }
+            50% { opacity:0.5; transform:scale(1.3); }
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            flex: 1;
+        }
+        @media (max-width: 700px) { .video-grid { grid-template-columns: 1fr; } }
+
+        .video-wrapper {
+            position: relative;
+            background: #000;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid #334155;
+            min-height: 200px;
+        }
+        .video-wrapper video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .video-label {
+            position: absolute; bottom: 10px; left: 12px;
+            background: rgba(0,0,0,0.65); color: #fff;
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 600;
+        }
+
+        /* FULLSCREEN VIDEO GRID */
+        .video-grid:fullscreen,
+        .video-grid:-webkit-full-screen {
+            background: #000;
+            padding: 10px;
+        }
+
+        /* CONTROLES */
+        .controls-row {
+            display: flex; flex-wrap: wrap; gap: 10px;
+        }
+        .live-btn {
+            padding: 10px 20px; border: none; border-radius: 10px;
+            font-weight: 700; font-size: 0.88rem; cursor: pointer;
+            color: #fff; transition: all 0.2s;
+        }
+        .live-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+        .btn-join { background: #22c55e; }
+        .btn-join:hover:not(:disabled) { background: #16a34a; }
+        .btn-cam { background: #2563eb; }
+        .btn-cam:hover:not(:disabled) { background: #1d4ed8; }
+        .btn-mic { background: #10b981; }
+        .btn-mic:hover:not(:disabled) { background: #059669; }
+        .btn-vid { background: #8b5cf6; }
+        .btn-vid:hover:not(:disabled) { background: #7c3aed; }
+        .btn-full { background: #f59e0b; }
+        .btn-full:hover:not(:disabled) { background: #d97706; }
+        .btn-leave { background: #ef4444; }
+        .btn-leave:hover:not(:disabled) { background: #dc2626; }
+        .hidden { display: none !important; }
+
+        .live-info {
+            background: #1e293b; border: 1px solid #334155;
+            border-radius: 10px; padding: 12px 16px;
+            font-size: 0.85rem; color: #94a3b8; line-height: 1.7;
+        }
+        .live-info strong { color: #e2e8f0; }
+        .room-id {
+            font-family: monospace; background: #334155;
+            padding: 2px 10px; border-radius: 4px;
+            color: #38bdf8; font-weight: 700;
+        }
+
+        /* CHAT SIDEBAR */
+        .chat-sidebar {
+            background: #1e293b;
+            border-left: 1px solid #334155;
+            display: flex; flex-direction: column;
+        }
+        .chat-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid #334155;
+            font-weight: 700; font-size: 1rem;
+        }
+        .chat-messages {
+            flex: 1; overflow-y: auto; padding: 14px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .chat-msg { font-size: 0.88rem; color: #cbd5e1; }
+        .chat-msg strong { color: #38bdf8; }
+        .chat-msg.system { color: #6b7280; font-style: italic; }
+        .chat-input-area {
+            padding: 12px 14px; border-top: 1px solid #334155;
+            display: flex; gap: 8px;
+        }
+        .chat-input-area input {
+            flex: 1; padding: 10px 12px;
+            background: #0f172a; border: 1px solid #334155;
+            border-radius: 8px; color: #e2e8f0; font-size: 0.9rem;
+        }
+        .chat-input-area button {
+            padding: 10px 18px; background: #2563eb; color: #fff;
+            border: none; border-radius: 8px; font-weight: 700;
+            cursor: pointer; font-size: 0.85rem;
+        }
+        .chat-input-area button:hover { background: #1d4ed8; }
+
+        /* ALUNO INFO */
+        .student-badge {
+            background: #334155; color: #38bdf8;
+            padding: 4px 14px; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 600;
+        }
+
+        /* ACESSO NEGADO */
+        .access-denied {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; text-align: center; padding: 40px;
+        }
+        .access-denied h2 { font-size: 1.5rem; margin-bottom: 12px; }
+        .access-denied p { color: #94a3b8; margin-bottom: 20px; }
+        .access-denied a {
+            padding: 12px 28px; background: #2563eb; color: #fff;
+            border-radius: 10px; text-decoration: none; font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ACESSO NEGADO (mostrado se não tiver login) -->
+    <div id="accessDenied" class="access-denied hidden">
+        <div>
+            <h2>🔒 Acesso Restrito</h2>
+            <p>Você precisa estar logado na área de membros para acessar a aula ao vivo.</p>
+            <a href="index.html#exercicios">Ir para Área de Alunos</a>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="live-header" id="liveHeader" style="display:none;">
+        <div class="live-header-left">
+            <img src="img/foto-profissional.png" alt="Teacher Alex">
+            <div>
+                <h1>🎥 Aula ao Vivo</h1>
+                <span>Teacher Alex Araújo</span>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <span class="student-badge" id="studentBadge">Aluno</span>
+            <a href="index.html#exercicios" class="btn-back">← Voltar</a>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="live-layout" id="liveLayout" style="display:none;">
+
+        <!-- COLUNA ESQUERDA: VÍDEO -->
+        <div class="video-area">
+            <div class="live-status-bar">
+                <span id="liveStatusDot" class="status-dot offline"></span>
+                <span id="liveStatusText">Clique em "Entrar na Sala" para começar.</span>
+            </div>
+
+            <div class="video-grid" id="videoGrid">
+                <div class="video-wrapper">
+                    <video id="localVideo" autoplay muted playsinline></video>
+                    <span class="video-label">Você</span>
+                </div>
+                <div class="video-wrapper">
+                    <video id="remoteVideo" autoplay playsinline></video>
+                    <span class="video-label">Teacher Alex</span>
+                </div>
+            </div>
+
+            <div class="controls-row">
+                <button id="btnJoinRoom" class="live-btn btn-join">🚀 Entrar na Sala</button>
+                <button id="btnStartCam" class="live-btn btn-cam" disabled>📷 Ativar Câmera</button>
+                <button id="btnMuteMic" class="live-btn btn-mic" disabled>🎤 Microfone ON</button>
+                <button id="btnMuteVideo" class="live-btn btn-vid" disabled>📹 Vídeo ON</button>
+                <button id="btnFullscreen" class="live-btn btn-full" disabled>🖥️ Tela Cheia</button>
+                <button id="btnLeaveRoom" class="live-btn btn-leave hidden">❌ Sair da Aula</button>
+            </div>
+
+            <div class="live-info">
+                <p>⚠️ <strong>Passo 1:</strong> Clique em "Entrar na Sala" para conectar ao servidor.</p>
+                <p>⚠️ <strong>Passo 2:</strong> Ative câmera e microfone para participar.</p>
+                <p>🖥️ Use "Tela Cheia" para melhor visualização.</p>
+                <p>📋 <strong>Seu ID:</strong> <span id="roomIdDisplay" class="room-id">—</span></p>
+            </div>
+        </div>
+
+        <!-- COLUNA DIREITA: CHAT -->
+        <div class="chat-sidebar">
+            <div class="chat-header">💬 Chat da Aula</div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Digite uma mensagem...">
+                <button id="btnSendChat">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script>
+        // ===== VERIFICAR ACESSO =====
+        const saved = JSON.parse(localStorage.getItem('teacherAlexAccess') || '{}');
+        if (!saved.enrolled || !saved.name) {
+            document.getElementById('accessDenied').classList.remove('hidden');
+        } else {
+            document.getElementById('liveHeader').style.display = 'flex';
+            document.getElementById('liveLayout').style.display = 'grid';
+            document.getElementById('studentBadge').textContent = '👋 ' + saved.name;
+            initLiveClass(saved.name);
+        }
+
+        function initLiveClass(studentName) {
+            const TEACHER_PEER_ID = 'teacher-alex-sala-principal';
+            let localStream = null;
+            let currentCall = null;
+            let peer = null;
+            let conn = null;
+            let isMicOn = true;
+            let isVideoOn = true;
+
+            const btnStartCam = document.getElementById('btnStartCam');
+            const btnMuteMic = document.getElementById('btnMuteMic');
+            const btnMuteVideo = document.getElementById('btnMuteVideo');
+            const btnJoinRoom = document.getElementById('btnJoinRoom');
+            const btnLeaveRoom = document.getElementById('btnLeaveRoom');
+            const btnFullscreen = document.getElementById('btnFullscreen');
+            const localVideo = document.getElementById('localVideo');
+            const remoteVideo = document.getElementById('remoteVideo');
+            const statusDot = document.getElementById('liveStatusDot');
+            const statusText = document.getElementById('liveStatusText');
+            const roomIdDisplay = document.getElementById('roomIdDisplay');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const btnSendChat = document.getElementById('btnSendChat');
+            const videoGrid = document.getElementById('videoGrid');
+
+            // 1️⃣ ENTRAR NA SALA
+            btnJoinRoom.addEventListener('click', () => {
+                setStatus('Conectando à sala...', 'waiting');
+                startConnection();
+            });
+
+            // 2️⃣ ATIVAR CÂMERA
+            btnStartCam.addEventListener('click', async () => {
+                try {
+                    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                    localVideo.srcObject = localStream;
+                    btnStartCam.disabled = true;
+                    btnMuteMic.disabled = false;
+                    btnMuteVideo.disabled = false;
+                    btnFullscreen.disabled = false;
+                    setStatus('🟢 Câmera ativa! Aula em andamento.', 'live');
+
+                    if (peer && !peer.destroyed) {
+                        const call = peer.call(TEACHER_PEER_ID, localStream, { metadata: { name: studentName } });
+                        if (call) {
+                            currentCall = call;
+                            call.on('stream', (rs) => { remoteVideo.srcObject = rs; });
+                            call.on('close', () => { remoteVideo.srcObject = null; });
+                        }
+                    }
+                } catch (err) {
+                    alert('Erro ao acessar câmera/microfone: ' + err.message);
+                }
+            });
+
+            // MIC
+            btnMuteMic.addEventListener('click', () => {
+                if (!localStream) return;
+                isMicOn = !isMicOn;
+                localStream.getAudioTracks().forEach(t => t.enabled = isMicOn);
+                btnMuteMic.textContent = isMicOn ? '🎤 Microfone ON' : '🔇 Microfone OFF';
+                btnMuteMic.style.background = isMicOn ? '' : '#ef4444';
+            });
+
+            // VIDEO
+            btnMuteVideo.addEventListener('click', () => {
+                if (!localStream) return;
+                isVideoOn = !isVideoOn;
+                localStream.getVideoTracks().forEach(t => t.enabled = isVideoOn);
+                btnMuteVideo.textContent = isVideoOn ? '📹 Vídeo ON' : '🚫 Vídeo OFF';
+                btnMuteVideo.style.background = isVideoOn ? '' : '#ef4444';
+            });
+
+            // TELA CHEIA
+            btnFullscreen.addEventListener('click', () => {
+                const target = videoGrid || remoteVideo;
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else if (target.requestFullscreen) {
+                    target.requestFullscreen();
+                } else if (target.webkitRequestFullscreen) {
+                    target.webkitRequestFullscreen();
+                } else if (target.msRequestFullscreen) {
+                    target.msRequestFullscreen();
+                }
+            });
+
+            // SAIR
+            btnLeaveRoom.addEventListener('click', leaveRoom);
+
+            // CHAT
+            btnSendChat.addEventListener('click', sendChat);
+            chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
+
+            function startConnection() {
+                const studentId = 'aluno-' + Math.random().toString(36).substr(2, 8);
+                roomIdDisplay.textContent = studentId;
+
+                peer = new Peer(studentId, { host: '0.peerjs.com', port: 443, path: '/', secure: true });
+
+                peer.on('open', () => {
+                    setStatus('✅ Conectado! Agora ative sua câmera.', 'waiting');
+                    addChat('Sistema', 'Você entrou na sala como "' + studentName + '". Ative a câmera para iniciar.');
+                    btnJoinRoom.disabled = true;
+                    btnStartCam.disabled = false;
+                    btnLeaveRoom.classList.remove('hidden');
+
+                    conn = peer.connect(TEACHER_PEER_ID);
+                    if (conn) {
+                        conn.on('open', () => { conn.send({ type: 'join', name: studentName }); });
+                        conn.on('data', (d) => { if (d.type === 'chat') addChat('Teacher Alex', d.message); });
+                    }
+
+                    if (localStream) {
+                        const call = peer.call(TEACHER_PEER_ID, localStream, { metadata: { name: studentName } });
+                        if (call) {
+                            currentCall = call;
+                            call.on('stream', (rs) => {
+                                remoteVideo.srcObject = rs;
+                                setStatus('🟢 Aula ao vivo!', 'live');
+                            });
+                            call.on('close', () => { remoteVideo.srcObject = null; });
+                        }
+                    }
+
+                    peer.on('call', (ic) => {
+                        ic.answer(localStream || new MediaStream());
+                        currentCall = ic;
+                        ic.on('stream', (rs) => {
+                            remoteVideo.srcObject = rs;
+                            setStatus('🟢 Aula ao vivo!', 'live');
+                        });
+                    });
+
+                    peer.on('connection', (dc) => {
+                        dc.on('data', (d) => { if (d.type === 'chat') addChat('Teacher Alex', d.message); });
+                    });
+                });
+
+                peer.on('error', (err) => {
+                    if (err.type === 'peer-unavailable') {
+                        setStatus('⏳ Professor ainda não está online. Aguarde.', 'waiting');
+                    } else {
+                        setStatus('Erro: ' + err.message, 'offline');
+                    }
+                });
+            }
+
+            function leaveRoom() {
+                if (currentCall) currentCall.close();
+                if (conn) conn.close();
+                if (peer) peer.destroy();
+                if (localStream) { localStream.getTracks().forEach(t => t.stop()); localStream = null; }
+                localVideo.srcObject = null;
+                remoteVideo.srcObject = null;
+                setStatus('Você saiu da aula.', 'offline');
+                btnLeaveRoom.classList.add('hidden');
+                btnJoinRoom.disabled = false;
+                btnStartCam.disabled = true;
+                btnMuteMic.disabled = true;
+                btnMuteVideo.disabled = true;
+                btnFullscreen.disabled = true;
+                addChat('Sistema', 'Você saiu da sala.');
+            }
+
+            function setStatus(msg, type) {
+                statusText.textContent = msg;
+                statusDot.className = 'status-dot ' + type;
+            }
+
+            function sendChat() {
+                const msg = chatInput.value.trim();
+                if (!msg) return;
+                addChat('Você', msg);
+                if (conn && conn.open) conn.send({ type: 'chat', message: msg });
+                chatInput.value = '';
+            }
+
+            function addChat(from, msg) {
+                const div = document.createElement('div');
+                div.className = 'chat-msg';
+                div.innerHTML = '<strong>' + from + ':</strong> ' + msg;
+                chatMessages.appendChild(div);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>
