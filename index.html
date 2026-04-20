@@ -59,7 +59,7 @@
             <div class="student-area-header">
                 <span class="section-badge">Área de Alunos</span>
                 <h2>Acesso exclusivo com matrícula ou token</h2>
-                <p>Ao se matricular ou validar o token enviado pelo professor, o aluno recebe liberação imediata para entrar na área de membros e acessar os exercícios do Agendaweb.</p>
+                <p>Ao se matricular ou validar o token enviado pelo professor, o aluno recebe liberação imediata para entrar na área de membros.</p>
             </div>
 
             <div class="student-area-grid">
@@ -70,9 +70,8 @@
                         <li>O cadastro é enviado para o e-mail teacherr.alex@gmail.com</li>
                         <li>O acesso à área de membros é liberado automaticamente após a confirmação</li>
                     </ul>
-
                     <div class="portal-note">
-                        <strong>Integração ativa:</strong> após validar o token ou concluir a matrícula, o aluno poderá acessar o portal <a href="https://agendaweb.org/" target="_blank" rel="noopener noreferrer">agendaweb.org</a> em uma nova aba.
+                        <strong>Integração ativa:</strong> após validar o token ou concluir a matrícula, o aluno poderá acessar o conteúdo do curso, exercícios e aulas ao vivo.
                     </div>
                 </div>
 
@@ -100,17 +99,432 @@
                             <strong>Seu token de acesso:</strong>
                             <span id="memberTokenValue"></span>
                         </div>
-                        <div class="portal-actions">
-                            <a href="https://agendaweb.org/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Abrir portal Agendaweb</a>
-                            <a href="#matricula" class="btn btn-secondary">Falar com o professor</a>
+
+                        <!-- ABAS DA ÁREA DE MEMBROS -->
+                        <div class="member-tabs">
+                            <button class="member-tab active" data-tab="conteudo">📚 Conteúdo do Curso</button>
+                            <button class="member-tab" data-tab="exercicios-tab">✏️ Exercícios</button>
+                            <button class="member-tab" data-tab="aula-ao-vivo">🎥 Aula ao Vivo</button>
+                            <button class="member-tab" data-tab="agendaweb">🌐 Agendaweb</button>
                         </div>
-                        <div class="portal-links">
-                            <a href="https://agendaweb.org/grammar-exercises.html" target="_blank" rel="noopener noreferrer">Grammar</a>
-                            <a href="https://agendaweb.org/vocabulary-exercises.html" target="_blank" rel="noopener noreferrer">Vocabulary</a>
-                            <a href="https://agendaweb.org/verbs-exercises.html" target="_blank" rel="noopener noreferrer">Verbs</a>
-                            <a href="https://agendaweb.org/listening-exercises.html" target="_blank" rel="noopener noreferrer">Listening</a>
-                            <a href="https://agendaweb.org/reading-exercises.html" target="_blank" rel="noopener noreferrer">Reading</a>
+
+                        <!-- ABA: CONTEÚDO DO CURSO -->
+                        <div id="tab-conteudo" class="tab-content active">
+                            <h3 class="module-title">📖 Módulo - Nível Básico I</h3>
+                            <p class="module-subtitle">Experts English • Teacher Alex Araújo</p>
+
+                            <div class="lesson-accordion">
+
+                                <!-- AULA INTRODUÇÃO -->
+                                <div class="lesson-item">
+                                    <button class="lesson-header">
+                                        <span>🎓 Aula de Introdução — Estrutura do Inglês</span>
+                                        <span class="lesson-toggle">▼</span>
+                                    </button>
+                                    <div class="lesson-body">
+                                        <p>O inglês é imutável nas formas e estrutura. Vamos aprender as sequências gramaticais através das estruturas pré-definidas.</p>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag affirm">Afirmativas</h4>
+                                            <p><strong>Sujeito + verbo + objeto + complemento</strong></p>
+                                            <p class="example">I <span class="highlight">work</span> at school everyday.</p>
+                                            <p>O sujeito e o verbo são obrigatórios; objeto e complemento são opcionais.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag negative">Negativa</h4>
+                                            <p><strong>Sujeito + (verbo auxiliar + not) + verbo + objeto + complemento</strong></p>
+                                            <p class="example">I <span class="highlight">do not (don't)</span> work at school everyday.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag question">Interrogativa</h4>
+                                            <p><strong>Verbo auxiliar + sujeito + verbo + objeto + complemento</strong></p>
+                                            <p class="example"><span class="highlight">Do</span> I work at school everyday?</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AULA 2: VERB TO BE -->
+                                <div class="lesson-item">
+                                    <button class="lesson-header">
+                                        <span>2️⃣ Verb to Be — Ser / Estar</span>
+                                        <span class="lesson-toggle">▼</span>
+                                    </button>
+                                    <div class="lesson-body">
+                                        <p>Formas de uso do Verb to Be:</p>
+                                        <ul class="use-list">
+                                            <li>1. Dizer idade: <em>I'm 36 years old.</em></li>
+                                            <li>2. Dizer que tem medo <em>(afraid of)</em>: <em>She is afraid of spiders.</em></li>
+                                            <li>3. Interesse <em>(interested in)</em>: <em>Paul is interested in music.</em></li>
+                                            <li>4. Adjetivos: <em>We are good friends.</em></li>
+                                            <li>5. Localização — Específica <em>(at)</em>: <em>We are at home.</em> | Geral <em>(in)</em>: <em>You are in Canada.</em></li>
+                                        </ul>
+                                        <div class="verb-table">
+                                            <table>
+                                                <thead><tr><th>Pronome</th><th>Verbo</th><th>Tradução</th></tr></thead>
+                                                <tbody>
+                                                    <tr><td>I</td><td>am</td><td>Eu sou/estou</td></tr>
+                                                    <tr><td>You</td><td>are</td><td>Você é/está</td></tr>
+                                                    <tr><td>He / She / It</td><td>is</td><td>Ele/Ela é/está</td></tr>
+                                                    <tr><td>We / You / They</td><td>are</td><td>Nós/Vós/Eles são/estão</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag affirm">Afirmativa</h4>
+                                            <p class="example">We <span class="highlight">are</span> good friends.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag negative">Negativa</h4>
+                                            <p class="example">We <span class="highlight">are not (aren't)</span> good friends.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag question">Interrogativa</h4>
+                                            <p class="example"><span class="highlight">Are</span> we good friends?</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AULA 3: PRESENT CONTINUOUS -->
+                                <div class="lesson-item">
+                                    <button class="lesson-header">
+                                        <span>3️⃣ Present Continuous</span>
+                                        <span class="lesson-toggle">▼</span>
+                                    </button>
+                                    <div class="lesson-body">
+                                        <p><strong>Definição:</strong> Define ações que estão acontecendo no momento (gerúndio).</p>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag affirm">Afirmativa</h4>
+                                            <p><strong>Sujeito + verb to be + (verb+ing) + complemento</strong></p>
+                                            <p class="example">I <span class="highlight">am studying</span> at the moment.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag negative">Negativa</h4>
+                                            <p class="example">I <span class="highlight">am not studying</span> at the moment.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag question">Interrogativa</h4>
+                                            <p class="example"><span class="highlight">Am</span> I <span class="highlight">studying</span> at the moment?</p>
+                                        </div>
+                                        <div class="rules-box">
+                                            <h4>📌 Regras principais do -ing:</h4>
+                                            <ul>
+                                                <li>Verbo termina em <strong>"e"</strong>: retira o "e" e adiciona -ing. Ex: love → loving</li>
+                                                <li>Últimas 3 letras CVC: dobra a última consoante + ing. Ex: swim → swimming</li>
+                                                <li>Verbo termina em <strong>"ie"</strong>: troca por "y" + ing. Ex: lie → lying</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AULA 4: PRESENT SIMPLE -->
+                                <div class="lesson-item">
+                                    <button class="lesson-header">
+                                        <span>4️⃣ Present Simple</span>
+                                        <span class="lesson-toggle">▼</span>
+                                    </button>
+                                    <div class="lesson-body">
+                                        <p><strong>Definição:</strong> Determinar ações que fazemos no cotidiano.</p>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag affirm">Afirmativa</h4>
+                                            <p class="example">I <span class="highlight">work</span> at school everyday.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag negative">Negativa</h4>
+                                            <p class="example">I <span class="highlight">don't</span> work. / She <span class="highlight">doesn't</span> work.</p>
+                                            <p><em>Do → I, you, we, they | Does → he, she, it</em></p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag question">Interrogativa</h4>
+                                            <p class="example"><span class="highlight">Do</span> you work? / <span class="highlight">Does</span> he work?</p>
+                                        </div>
+                                        <div class="rules-box">
+                                            <h4>📌 Regras 3ª pessoa (he/she/it):</h4>
+                                            <ul>
+                                                <li>85% dos verbos: adiciona "s". Ex: work → works</li>
+                                                <li>Termina em ch, sh, o, s, ss, x, z: adiciona "es". Ex: wash → washes</li>
+                                                <li>Termina em consoante + "y": troca "y" por "ies". Ex: study → studies</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AULA 5: VERB TO BE PAST -->
+                                <div class="lesson-item">
+                                    <button class="lesson-header">
+                                        <span>5️⃣ Verb to Be Past — Era / Estava</span>
+                                        <span class="lesson-toggle">▼</span>
+                                    </button>
+                                    <div class="lesson-body">
+                                        <p>Mesmos usos do verb to be, mas no passado.</p>
+                                        <div class="verb-table">
+                                            <table>
+                                                <thead><tr><th>Pronome</th><th>Verbo</th></tr></thead>
+                                                <tbody>
+                                                    <tr><td>I / He / She / It</td><td>was</td></tr>
+                                                    <tr><td>We / You / They</td><td>were</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag affirm">Afirmativa</h4>
+                                            <p class="example">We <span class="highlight">were</span> good friends.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag negative">Negativa</h4>
+                                            <p class="example">We <span class="highlight">were not (weren't)</span> good friends.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag question">Interrogativa</h4>
+                                            <p class="example"><span class="highlight">Were</span> we good friends?</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AULA 6: PAST CONTINUOUS -->
+                                <div class="lesson-item">
+                                    <button class="lesson-header">
+                                        <span>6️⃣ Past Continuous</span>
+                                        <span class="lesson-toggle">▼</span>
+                                    </button>
+                                    <div class="lesson-body">
+                                        <p><strong>Definição:</strong> Define ações que estavam acontecendo em um momento específico no passado.</p>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag affirm">Afirmativa</h4>
+                                            <p class="example">I <span class="highlight">was studying</span> 2 minutes ago.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag negative">Negativa</h4>
+                                            <p class="example">I <span class="highlight">was not studying</span> 2 minutes ago.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag question">Interrogativa</h4>
+                                            <p class="example"><span class="highlight">Was</span> I <span class="highlight">studying</span> 2 minutes ago?</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AULA 7: PAST SIMPLE -->
+                                <div class="lesson-item">
+                                    <button class="lesson-header">
+                                        <span>7️⃣ Past Simple</span>
+                                        <span class="lesson-toggle">▼</span>
+                                    </button>
+                                    <div class="lesson-body">
+                                        <p><strong>Definição:</strong> Define ações que começaram no passado e acabaram.</p>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag affirm">Afirmativa</h4>
+                                            <p class="example">I <span class="highlight">worked</span> yesterday. / I <span class="highlight">went</span> to work.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag negative">Negativa</h4>
+                                            <p class="example">I <span class="highlight">didn't</span> work yesterday.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag question">Interrogativa</h4>
+                                            <p class="example"><span class="highlight">Did</span> you work yesterday?</p>
+                                        </div>
+                                        <div class="rules-box">
+                                            <h4>📌 Verbos regulares vs irregulares:</h4>
+                                            <ul>
+                                                <li><strong>Regulares:</strong> adiciona -ed. Ex: work → worked</li>
+                                                <li><strong>Irregulares:</strong> mudam completamente. Ex: go → went</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AULA 8: PRESENT PERFECT -->
+                                <div class="lesson-item">
+                                    <button class="lesson-header">
+                                        <span>8️⃣ Present Perfect</span>
+                                        <span class="lesson-toggle">▼</span>
+                                    </button>
+                                    <div class="lesson-body">
+                                        <p><strong>Definição:</strong> Expressa ações que começaram no passado e continuam no presente.</p>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag affirm">Afirmativa</h4>
+                                            <p><strong>Sujeito + have/has + particípio + complemento</strong></p>
+                                            <p class="example">I <span class="highlight">have eaten</span> a cake. / She <span class="highlight">has eaten</span> a cake.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag negative">Negativa</h4>
+                                            <p class="example">I <span class="highlight">have not eaten</span> a cake. / She <span class="highlight">has not eaten</span> a cake.</p>
+                                        </div>
+                                        <div class="grammar-card">
+                                            <h4 class="grammar-tag question">Interrogativa</h4>
+                                            <p class="example"><span class="highlight">Have</span> I eaten a cake? / <span class="highlight">Has</span> she eaten a cake?</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
+
+                        <!-- ABA: EXERCÍCIOS -->
+                        <div id="tab-exercicios-tab" class="tab-content">
+                            <h3 class="module-title">✏️ Exercícios — Módulo Básico I</h3>
+                            <p class="module-subtitle">Traduza as frases para o inglês</p>
+
+                            <div class="exercise-section">
+                                <h4>2.1 Exercises — am / is / are</h4>
+                                <div class="exercise-list">
+                                    <div class="exercise-item" data-answer="I am cold.">1- Eu estou com frio.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="She is hot.">2- Ela está com calor.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They are hungry.">3- Eles estão com fome.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="We are good friends.">4- Nós somos bons amigos.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="I am 22 years old and he is 19.">5- Eu tenho 22 anos e ele 19.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Paul is sick. He is in the hospital.">6- Paulo está doente. Ele está no hospital.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="I am not interested in politics. I am interested in music.">7- Eu não me interesso por política. Eu me interesso por música.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="It is sunny today, but it is not hot.">8- Está ensolarado hoje, mas não está quente.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They are not American. They are English.">9- Elas não são americanas. São inglesas.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="She is afraid of dogs, but she is not afraid of spiders.">10- Ela tem medo de cachorros, mas não tem medo de aranha.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                </div>
+
+                                <h4>3.1 Exercises — Present Continuous</h4>
+                                <div class="exercise-list">
+                                    <div class="exercise-item" data-answer="Are you working at the moment?">1- Você está trabalhando no momento?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Is it raining?">2- Está chovendo?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Is she going now?">3- Ela está indo agora?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Is Maria working today?">4- Maria está trabalhando hoje?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Are the children sleeping?">5- As crianças estão dormindo?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Is that clock working?">6- Aquele relógio está funcionando?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Why are you crying?">7- Porque você está chorando?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Where are they going?">8- Onde eles estão indo?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="What are you doing?">9- O que você está fazendo?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="What is he doing?">10- O que ele está fazendo?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                </div>
+
+                                <h4>4.1 Exercises — Present Simple</h4>
+                                <div class="exercise-list">
+                                    <div class="exercise-item" data-answer="I like ice cream.">1- Eu gosto de sorvete.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="I like to travel.">2- Eu gosto de viajar.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="She wants to live here.">3- Ela quer morar aqui.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Maria wants chocolate.">4- Maria quer chocolate.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="The children study in the morning.">5- As crianças estudam de manhã.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="She goes to work at 7.">6- Ela vai para o trabalho às 7h.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="We stay at home on weekends.">7- Nós ficamos em casa nos fins de semana.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="She always has breakfast at work.">8- Ela sempre toma café da manhã no trabalho.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="I never see her here on Saturdays.">9- Eu nunca vejo ela aqui aos sábados.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="John always travels on vacation.">10- John sempre viaja nas férias.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                </div>
+
+                                <h4>5.1 Exercises — Verb to Be Past (was/were)</h4>
+                                <div class="exercise-list">
+                                    <div class="exercise-item" data-answer="I was at home last night.">1- Eu estava em casa ontem à noite.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Elena was 22 years old and I was 19.">2- Elena tinha 22 anos e eu 19.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="We were hungry during the game.">3- Nós estávamos com fome durante o jogo.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="The food was good.">4- A comida estava boa.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Where were you yesterday morning?">6- Onde você estava ontem pela manhã?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Who was at the party?">7- Quem estava na festa?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="How was your day?">8- Como foi seu dia?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Why were you sad yesterday?">9- Porque você estava triste ontem?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Where is Joana?">10- Onde está Joana?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                </div>
+
+                                <h4>6.1 Exercises — Past Continuous</h4>
+                                <div class="exercise-list">
+                                    <div class="exercise-item" data-answer="She was watching TV when I arrived.">1- Ela estava assistindo TV quando eu cheguei.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="It was raining when I left.">2- Estava chovendo quando eu saí.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="What were you doing last night?">3- O que você estava fazendo ontem à noite?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Where were you living last year?">4- Onde você estava morando ano passado?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They were at home. They were watching a movie.">5- Eles estavam em casa. Estavam assistindo filme.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Was she driving very fast?">6- Ela estava dirigindo muito rápido?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="The day was beautiful yesterday, the sun was shining and the birds were singing.">7- O dia estava bonito ontem, o sol estava brilhando e os pássaros estavam cantando.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="I was not listening to music this morning. I was sleeping.">8- Eu não estava ouvindo música essa manhã. Estava dormindo.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They were painting the house when I arrived.">9- Eles estavam pintando a casa quando eu cheguei.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Maria was not feeling well, so she was crying.">10- Maria não estava se sentindo bem, por isso estava chorando.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                </div>
+
+                                <h4>7.1 Exercises — Past Simple</h4>
+                                <div class="exercise-list">
+                                    <div class="exercise-item" data-answer="I worked a lot yesterday.">1- Eu trabalhei muito ontem.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="I worked at ABC computers in September.">2- Eu trabalhei na ABC computers em setembro.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="The rain stopped 10 minutes ago.">3- A chuva parou há 10 minutos.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="We talked to many people at the party.">4- Nós conversamos com muitas pessoas na festa.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="When she was a child, she fell and broke her arm.">5- Quando ela era criança, ela caiu e quebrou o braço.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="He gave me the keys and left.">6- Ele me devolveu as chaves e foi embora.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="I heard that she was here.">7- Eu ouvi dizer que ela estava aqui.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They sold the house yesterday.">8- Eles venderam a casa ontem.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="I studied a lot for this test.">9- Eu estudei muito para essa prova.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="She said she spent a lot at the party.">10- Ela disse que gastou muito na festa.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                </div>
+
+                                <h4>8.1 Exercises — Present Perfect</h4>
+                                <div class="exercise-list">
+                                    <div class="exercise-item" data-answer="I have bought a new car.">1- Eu comprei um carro novo.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="The car has broken down.">2- O carro quebrou.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="She has turned on the TV.">3- Ela ligou a TV.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They have done the exercise.">4- Eles fizeram o exercício.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They have not left.">5- Eles não saíram.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Where has he gone?">6- Onde ele foi?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="What have you done?">7- O que você fez?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They have eaten.">8- Eles comeram.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="They have not painted the school.">9- Eles não pintaram a escola.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="Has she been there?">10- Ela foi lá?<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ABA: AULA AO VIVO -->
+                        <div id="tab-aula-ao-vivo" class="tab-content">
+                            <div class="live-class-container">
+                                <h3 class="module-title">🎥 Aula ao Vivo com Teacher Alex</h3>
+                                <p class="module-subtitle">Tecnologia WebRTC — sem limite de tempo, sem necessidade de apps externos</p>
+
+                                <div class="live-status-bar">
+                                    <span id="liveStatusDot" class="status-dot offline"></span>
+                                    <span id="liveStatusText">Sala aguardando conexão...</span>
+                                </div>
+
+                                <div class="video-grid" id="videoGrid">
+                                    <div class="video-wrapper">
+                                        <video id="localVideo" autoplay muted playsinline></video>
+                                        <span class="video-label">Você</span>
+                                    </div>
+                                    <div class="video-wrapper">
+                                        <video id="remoteVideo" autoplay playsinline></video>
+                                        <span class="video-label">Teacher Alex</span>
+                                    </div>
+                                </div>
+
+                                <div class="live-controls">
+                                    <button id="btnStartCam" class="live-btn btn-cam">📷 Ativar Câmera</button>
+                                    <button id="btnMuteMic" class="live-btn btn-mic" disabled>🎤 Microfone ON</button>
+                                    <button id="btnMuteVideo" class="live-btn btn-vid" disabled>📹 Vídeo ON</button>
+                                    <button id="btnJoinRoom" class="live-btn btn-join" disabled>🚀 Entrar na Sala</button>
+                                    <button id="btnLeaveRoom" class="live-btn btn-leave hidden">❌ Sair da Aula</button>
+                                </div>
+
+                                <div class="chat-area">
+                                    <h4>💬 Chat da aula</h4>
+                                    <div id="chatMessages" class="chat-messages"></div>
+                                    <div class="chat-input-row">
+                                        <input type="text" id="chatInput" placeholder="Digite uma mensagem...">
+                                        <button id="btnSendChat" class="live-btn btn-join">Enviar</button>
+                                    </div>
+                                </div>
+
+                                <div class="live-info-box">
+                                    <p>⚠️ <strong>Como funciona:</strong> Ao clicar em "Entrar na Sala", você entra na sala de aula virtual. O Teacher Alex entrará pelo painel do professor. A comunicação é via <strong>WebRTC peer-to-peer</strong>, sem limite de tempo.</p>
+                                    <p>📋 <strong>ID da sua sala:</strong> <span id="roomIdDisplay" class="room-id">—</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ABA: AGENDAWEB -->
+                        <div id="tab-agendaweb" class="tab-content">
+                            <div class="portal-actions">
+                                <a href="https://agendaweb.org/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Abrir portal Agendaweb</a>
+                                <a href="#matricula" class="btn btn-secondary">Falar com o professor</a>
+                            </div>
+                            <div class="portal-links">
+                                <a href="https://agendaweb.org/grammar-exercises.html" target="_blank" rel="noopener noreferrer">Grammar</a>
+                                <a href="https://agendaweb.org/vocabulary-exercises.html" target="_blank" rel="noopener noreferrer">Vocabulary</a>
+                                <a href="https://agendaweb.org/verbs-exercises.html" target="_blank" rel="noopener noreferrer">Verbs</a>
+                                <a href="https://agendaweb.org/listening-exercises.html" target="_blank" rel="noopener noreferrer">Listening</a>
+                                <a href="https://agendaweb.org/reading-exercises.html" target="_blank" rel="noopener noreferrer">Reading</a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -128,7 +542,6 @@
                     <li>Envio do cadastro para o e-mail do professor</li>
                     <li>Acesso direto ao portal com exercícios do Agendaweb</li>
                 </ul>
-
                 <div class="packages-grid">
                     <div class="package-card">
                         <h3>1 aula por semana</h3>
@@ -150,22 +563,16 @@
                 <form id="enrollmentForm" class="enrollment-form">
                     <label for="enrollName">Nome completo</label>
                     <input type="text" id="enrollName" name="enrollName" placeholder="Digite seu nome completo">
-
                     <label for="enrollEmail">E-mail</label>
                     <input type="email" id="enrollEmail" name="enrollEmail" placeholder="Digite seu e-mail">
-
                     <label for="enrollPhone">WhatsApp</label>
                     <input type="text" id="enrollPhone" name="enrollPhone" placeholder="(00) 00000-0000">
-
                     <label for="enrollCep">CEP</label>
                     <input type="text" id="enrollCep" name="enrollCep" placeholder="00000-000">
-
                     <label for="enrollAddress">Endereço completo</label>
                     <input type="text" id="enrollAddress" name="enrollAddress" placeholder="Rua, número, bairro, cidade e estado">
-
                     <label for="enrollGoal">Objetivo</label>
                     <input type="text" id="enrollGoal" name="enrollGoal" placeholder="Ex.: conversação, gramática, provas">
-
                     <label for="contractDuration">Tempo de contrato desejado</label>
                     <select id="contractDuration" name="contractDuration">
                         <option value="">Selecione uma opção</option>
@@ -173,7 +580,6 @@
                         <option value="6 meses">6 meses</option>
                         <option value="1 ano">1 ano</option>
                     </select>
-
                     <label for="selectedPackage">Pacote de aulas</label>
                     <select id="selectedPackage" name="selectedPackage">
                         <option value="">Selecione um pacote</option>
@@ -181,7 +587,6 @@
                         <option value="2 aulas por semana - R$ 400,00 mensais">2 aulas por semana - R$ 400,00 mensais</option>
                         <option value="3 aulas por semana - R$ 600,00 mensais">3 aulas por semana - R$ 600,00 mensais</option>
                     </select>
-
                     <button type="submit" class="btn btn-cta">Matricular e liberar acesso</button>
                 </form>
                 <p id="enrollmentMessage" class="enrollment-message"></p>
@@ -199,5 +604,6 @@
 
     <script src="config.js"></script>
     <script src="script.js"></script>
+    <script src="webrtc.js"></script>
 </body>
 </html>
