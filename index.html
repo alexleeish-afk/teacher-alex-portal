@@ -93,6 +93,7 @@
 
                     <p id="accessMessage" class="access-message"></p>
 
+                    <!-- ÁREA DE MEMBROS (aparece após login) -->
                     <div id="agendawebAccess" class="agendaweb-access hidden">
                         <p id="studentWelcome"></p>
                         <div id="memberTokenBox" class="member-token-box hidden">
@@ -365,6 +366,7 @@
                             <p class="module-subtitle">Traduza as frases para o inglês</p>
 
                             <div class="exercise-section">
+
                                 <h4>2.1 Exercises — am / is / are</h4>
                                 <div class="exercise-list">
                                     <div class="exercise-item" data-answer="I am cold.">1- Eu estou com frio.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
@@ -400,7 +402,7 @@
                                     <div class="exercise-item" data-answer="She wants to live here.">3- Ela quer morar aqui.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
                                     <div class="exercise-item" data-answer="Maria wants chocolate.">4- Maria quer chocolate.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
                                     <div class="exercise-item" data-answer="The children study in the morning.">5- As crianças estudam de manhã.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
-                                    <div class="exercise-item" data-answer="She goes to work at 7.">6- Ela vai para o trabalho às 7h.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
+                                    <div class="exercise-item" data-answer="He goes to work at 7.">6- Ele vai para o trabalho às 7h.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
                                     <div class="exercise-item" data-answer="We stay at home on weekends.">7- Nós ficamos em casa nos fins de semana.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
                                     <div class="exercise-item" data-answer="She always has breakfast at work.">8- Ela sempre toma café da manhã no trabalho.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
                                     <div class="exercise-item" data-answer="I never see her here on Saturdays.">9- Eu nunca vejo ela aqui aos sábados.<input type="text" placeholder="Sua resposta..."><button class="check-btn">Verificar</button><span class="result"></span></div>
@@ -470,17 +472,17 @@
                                 <h3 class="module-title">🎥 Aula ao Vivo com Teacher Alex</h3>
                                 <p class="module-subtitle" style="margin-bottom: 24px;">Clique no botão abaixo para abrir a sala de aula em uma nova janela dedicada.</p>
 
-                                <button id="btnOpenLiveWindow" class="btn btn-primary" style="font-size:1.1rem; padding: 16px 40px; border-radius: 12px; cursor: pointer;">
+                                <button id="btnOpenLiveWindow" class="btn btn-primary" style="font-size:1.1rem; padding: 16px 40px; border-radius: 12px; cursor: pointer; background: #22c55e; color: #fff; border: none; font-weight: 700;">
                                     🚀 Abrir Sala de Aula ao Vivo
                                 </button>
 
-                                <div style="margin-top: 30px; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
-                                    <p style="margin-bottom: 10px;"><strong>Como funciona:</strong></p>
-                                    <p style="color: #94a3b8; margin-bottom: 8px;">1️⃣ Clique no botão acima — uma nova janela será aberta.</p>
-                                    <p style="color: #94a3b8; margin-bottom: 8px;">2️⃣ Na nova janela, clique em <strong>"Entrar na Sala"</strong> para conectar.</p>
-                                    <p style="color: #94a3b8; margin-bottom: 8px;">3️⃣ Ative sua <strong>câmera e microfone</strong> para participar.</p>
-                                    <p style="color: #94a3b8; margin-bottom: 8px;">4️⃣ Use <strong>"Tela Cheia"</strong> para melhor visualização.</p>
-                                    <p style="color: #94a3b8;">💬 O chat lateral permite trocar mensagens durante a aula.</p>
+                                <div style="margin-top: 30px; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; color: #94a3b8;">
+                                    <p style="margin-bottom: 10px; color: #e2e8f0;"><strong>Como funciona:</strong></p>
+                                    <p style="margin-bottom: 8px;">1️⃣ Clique no botão acima — uma nova janela será aberta.</p>
+                                    <p style="margin-bottom: 8px;">2️⃣ Na nova janela, clique em <strong style="color:#e2e8f0;">"Entrar na Sala"</strong> para conectar.</p>
+                                    <p style="margin-bottom: 8px;">3️⃣ Ative sua <strong style="color:#e2e8f0;">câmera e microfone</strong> para participar.</p>
+                                    <p style="margin-bottom: 8px;">4️⃣ Use <strong style="color:#e2e8f0;">"Tela Cheia"</strong> para melhor visualização.</p>
+                                    <p>💬 O chat lateral permite trocar mensagens durante a aula.</p>
                                 </div>
                             </div>
                         </div>
@@ -515,21 +517,12 @@
                 <ul class="cta-list">
                     <li>Matrícula rápida e online</li>
                     <li>Envio do cadastro para o e-mail do professor</li>
-                    <li>Acesso direto ao portal com exercícios do Agendaweb</li>
+                    <li>Acesso direto ao portal com exercícios</li>
                 </ul>
                 <div class="packages-grid">
-                    <div class="package-card">
-                        <h3>1 aula por semana</h3>
-                        <p class="package-price">R$ 250,00 <span>mensais</span></p>
-                    </div>
-                    <div class="package-card featured">
-                        <h3>2 aulas por semana</h3>
-                        <p class="package-price">R$ 400,00 <span>mensais</span></p>
-                    </div>
-                    <div class="package-card">
-                        <h3>3 aulas por semana</h3>
-                        <p class="package-price">R$ 600,00 <span>mensais</span></p>
-                    </div>
+                    <div class="package-card"><h3>1 aula/semana</h3><p class="package-price">R$ 250,00 <span>mensais</span></p></div>
+                    <div class="package-card featured"><h3>2 aulas/semana</h3><p class="package-price">R$ 400,00 <span>mensais</span></p></div>
+                    <div class="package-card"><h3>3 aulas/semana</h3><p class="package-price">R$ 600,00 <span>mensais</span></p></div>
                 </div>
             </div>
 
@@ -548,19 +541,19 @@
                     <input type="text" id="enrollAddress" name="enrollAddress" placeholder="Rua, número, bairro, cidade e estado">
                     <label for="enrollGoal">Objetivo</label>
                     <input type="text" id="enrollGoal" name="enrollGoal" placeholder="Ex.: conversação, gramática, provas">
-                    <label for="contractDuration">Tempo de contrato desejado</label>
+                    <label for="contractDuration">Tempo de contrato</label>
                     <select id="contractDuration" name="contractDuration">
-                        <option value="">Selecione uma opção</option>
+                        <option value="">Selecione</option>
                         <option value="3 meses">3 meses</option>
                         <option value="6 meses">6 meses</option>
                         <option value="1 ano">1 ano</option>
                     </select>
                     <label for="selectedPackage">Pacote de aulas</label>
                     <select id="selectedPackage" name="selectedPackage">
-                        <option value="">Selecione um pacote</option>
-                        <option value="1 aula por semana - R$ 250,00 mensais">1 aula por semana - R$ 250,00 mensais</option>
-                        <option value="2 aulas por semana - R$ 400,00 mensais">2 aulas por semana - R$ 400,00 mensais</option>
-                        <option value="3 aulas por semana - R$ 600,00 mensais">3 aulas por semana - R$ 600,00 mensais</option>
+                        <option value="">Selecione</option>
+                        <option value="1 aula por semana - R$ 250,00">1 aula/semana - R$ 250,00</option>
+                        <option value="2 aulas por semana - R$ 400,00">2 aulas/semana - R$ 400,00</option>
+                        <option value="3 aulas por semana - R$ 600,00">3 aulas/semana - R$ 600,00</option>
                     </select>
                     <button type="submit" class="btn btn-cta">Matricular e liberar acesso</button>
                 </form>
@@ -579,6 +572,5 @@
 
     <script src="config.js"></script>
     <script src="script.js"></script>
-    <script src="webrtc.js"></script>
 </body>
 </html>
