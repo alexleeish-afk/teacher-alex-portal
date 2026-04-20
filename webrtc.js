@@ -10,47 +10,13 @@ let conn = null;
 const TEACHER_PEER_ID = 'teacher-alex-sala-principal';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ===== ABAS =====
-    document.querySelectorAll('.member-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.member-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            tab.classList.add('active');
-            document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-        });
-    });
 
-    // ===== ACCORDION =====
-    document.querySelectorAll('.lesson-header').forEach(btn => {
-        btn.addEventListener('click', () => {
-            btn.parentElement.classList.toggle('open');
-        });
-    });
-
-    // ===== VERIFICAR EXERCÍCIOS =====
-    document.querySelectorAll('.check-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const item = btn.closest('.exercise-item');
-            const input = item.querySelector('input');
-            const result = item.querySelector('.result');
-            const answer = item.dataset.answer.toLowerCase().trim();
-            const userAnswer = input.value.toLowerCase().trim();
-            if (userAnswer === answer) {
-                result.textContent = '✅ Correto!';
-                result.style.color = '#22c55e';
-            } else {
-                result.textContent = '❌ Resposta: ' + item.dataset.answer;
-                result.style.color = '#ef4444';
-            }
-        });
-    });
-
-    // ===== CÂMERA =====
     const btnStartCam = document.getElementById('btnStartCam');
     const btnMuteMic = document.getElementById('btnMuteMic');
     const btnMuteVideo = document.getElementById('btnMuteVideo');
     const btnJoinRoom = document.getElementById('btnJoinRoom');
     const btnLeaveRoom = document.getElementById('btnLeaveRoom');
+    const btnFullscreen = document.getElementById('btnFullscreen');
     const localVideo = document.getElementById('localVideo');
     const remoteVideo = document.getElementById('remoteVideo');
     const statusDot = document.getElementById('liveStatusDot');
@@ -59,9 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = document.getElementById('chatMessages');
     const chatInput = document.getElementById('chatInput');
     const btnSendChat = document.getElementById('btnSendChat');
+    const videoGrid = document.getElementById('videoGrid');
 
-    if (!btnStartCam) return;
+    if (!btnJoinRoom) return;
 
+    // 1️⃣ PRIMEIRO: ENTRAR NA SALA
+    btnJoinRoom.addEventListener('click', () => {
+        studentName = document.getElementById('studentName')?.value || 'Aluno';
+        setStatus('Conectando à sala...', 'waiting');
+        loadPeerAndConnect();
+    });
+
+    // 2️⃣ DEPOIS: ATIVAR CÂMERA/ÁUDIO
     btnStartCam.addEventListener('click', async () => {
         try {
             localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -69,13 +44,25 @@ document.addEventListener('DOMContentLoaded', () => {
             btnStartCam.disabled = true;
             btnMuteMic.disabled = false;
             btnMuteVideo.disabled = false;
-            btnJoinRoom.disabled = false;
-            setStatus('Câmera ativa. Clique em "Entrar na Sala".', 'waiting');
+            btnFullscreen.disabled = false;
+            setStatus('🟢 Câmera ativa! Aula em andamento.', 'live');
+
+            // Se já estiver conectado, envia stream ao professor
+            if (currentCall && peer) {
+                // Reconecta com stream
+                const call = peer.call(TEACHER_PEER_ID, localStream, { metadata: { name: studentName } });
+                if (call) {
+                    currentCall = call;
+                    call.on('stream', (rs) => { remoteVideo.srcObject = rs; });
+                    call.on('close', () => { remoteVideo.srcObject = null; });
+                }
+            }
         } catch (err) {
             alert('Não foi possível acessar câmera/microfone: ' + err.message);
         }
     });
 
+    // MIC
     btnMuteMic.addEventListener('click', () => {
         if (!localStream) return;
         isMicOn = !isMicOn;
@@ -84,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnMuteMic.style.background = isMicOn ? '' : '#ef4444';
     });
 
+    // VIDEO
     btnMuteVideo.addEventListener('click', () => {
         if (!localStream) return;
         isVideoOn = !isVideoOn;
@@ -92,15 +80,26 @@ document.addEventListener('DOMContentLoaded', () => {
         btnMuteVideo.style.background = isVideoOn ? '' : '#ef4444';
     });
 
-    btnJoinRoom.addEventListener('click', () => {
-        studentName = document.getElementById('studentName')?.value || 'Aluno';
-        loadPeerAndConnect();
-    });
+    // TELA CHEIA
+    if (btnFullscreen) {
+        btnFullscreen.addEventListener('click', () => {
+            const target = videoGrid || remoteVideo;
+            if (target.requestFullscreen) {
+                target.requestFullscreen();
+            } else if (target.webkitRequestFullscreen) {
+                target.webkitRequestFullscreen();
+            } else if (target.msRequestFullscreen) {
+                target.msRequestFullscreen();
+            }
+        });
+    }
 
+    // SAIR
     btnLeaveRoom.addEventListener('click', leaveRoom);
 
-    btnSendChat.addEventListener('click', sendChat);
-    chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
+    // CHAT
+    if (btnSendChat) btnSendChat.addEventListener('click', sendChat);
+    if (chatInput) chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
 
     function loadPeerAndConnect() {
         if (typeof Peer === 'undefined') {
@@ -121,37 +120,39 @@ document.addEventListener('DOMContentLoaded', () => {
         peer = new Peer(studentId, { host: '0.peerjs.com', port: 443, path: '/', secure: true });
 
         peer.on('open', () => {
-            setStatus('Conectado. Chamando o professor...', 'waiting');
-            addChat('Sistema', 'Você entrou na sala como "' + studentName + '". Aguardando o professor...');
+            setStatus('✅ Conectado à sala! Agora ative sua câmera.', 'waiting');
+            addChat('Sistema', 'Você entrou na sala como "' + studentName + '". Ative a câmera para iniciar.');
+            btnJoinRoom.disabled = true;
+            btnStartCam.disabled = false;
+            btnLeaveRoom.classList.remove('hidden');
 
-            const call = peer.call(TEACHER_PEER_ID, localStream, { metadata: { name: studentName } });
-            if (call) {
-                currentCall = call;
-                call.on('stream', (rs) => {
-                    remoteVideo.srcObject = rs;
-                    setStatus('🟢 Aula ao vivo em andamento!', 'live');
-                    btnLeaveRoom.classList.remove('hidden');
-                    btnJoinRoom.disabled = true;
-                });
-                call.on('close', () => { setStatus('Chamada encerrada.', 'offline'); remoteVideo.srcObject = null; });
-            } else {
-                setStatus('Professor não está online. Tente novamente.', 'offline');
-            }
-
+            // Conexão de dados (chat)
             conn = peer.connect(TEACHER_PEER_ID);
             if (conn) {
                 conn.on('open', () => { conn.send({ type: 'join', name: studentName }); });
                 conn.on('data', (d) => { if (d.type === 'chat') addChat('Teacher Alex', d.message); });
             }
 
+            // Se já tem stream, chama o professor
+            if (localStream) {
+                const call = peer.call(TEACHER_PEER_ID, localStream, { metadata: { name: studentName } });
+                if (call) {
+                    currentCall = call;
+                    call.on('stream', (rs) => {
+                        remoteVideo.srcObject = rs;
+                        setStatus('🟢 Aula ao vivo em andamento!', 'live');
+                    });
+                    call.on('close', () => { remoteVideo.srcObject = null; });
+                }
+            }
+
+            // Receber chamada do professor
             peer.on('call', (ic) => {
-                ic.answer(localStream);
+                ic.answer(localStream || new MediaStream());
                 currentCall = ic;
                 ic.on('stream', (rs) => {
                     remoteVideo.srcObject = rs;
                     setStatus('🟢 Aula ao vivo em andamento!', 'live');
-                    btnLeaveRoom.classList.remove('hidden');
-                    btnJoinRoom.disabled = true;
                 });
             });
 
@@ -171,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function leaveRoom() {
         if (currentCall) currentCall.close();
+        if (conn) conn.close();
         if (peer) peer.destroy();
         if (localStream) { localStream.getTracks().forEach(t => t.stop()); localStream = null; }
         localVideo.srcObject = null;
@@ -178,9 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
         setStatus('Você saiu da aula.', 'offline');
         btnLeaveRoom.classList.add('hidden');
         btnJoinRoom.disabled = false;
-        btnStartCam.disabled = false;
+        btnStartCam.disabled = true;
         btnMuteMic.disabled = true;
         btnMuteVideo.disabled = true;
+        if (btnFullscreen) btnFullscreen.disabled = true;
         addChat('Sistema', 'Você saiu da sala.');
     }
 

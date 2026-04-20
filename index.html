@@ -468,11 +468,11 @@
                         <div id="tab-aula-ao-vivo" class="tab-content">
                             <div class="live-class-container">
                                 <h3 class="module-title">🎥 Aula ao Vivo com Teacher Alex</h3>
-                                <p class="module-subtitle">Tecnologia WebRTC — sem limite de tempo, sem necessidade de apps externos</p>
+                                <p class="module-subtitle">Tecnologia WebRTC — sem limite de tempo</p>
 
                                 <div class="live-status-bar">
                                     <span id="liveStatusDot" class="status-dot offline"></span>
-                                    <span id="liveStatusText">Sala aguardando conexão...</span>
+                                    <span id="liveStatusText">Clique em "Entrar na Sala" para começar.</span>
                                 </div>
 
                                 <div class="video-grid" id="videoGrid">
@@ -487,10 +487,11 @@
                                 </div>
 
                                 <div class="live-controls">
-                                    <button id="btnStartCam" class="live-btn btn-cam">📷 Ativar Câmera</button>
+                                    <button id="btnJoinRoom" class="live-btn btn-join">🚀 Entrar na Sala</button>
+                                    <button id="btnStartCam" class="live-btn btn-cam" disabled>📷 Ativar Câmera</button>
                                     <button id="btnMuteMic" class="live-btn btn-mic" disabled>🎤 Microfone ON</button>
                                     <button id="btnMuteVideo" class="live-btn btn-vid" disabled>📹 Vídeo ON</button>
-                                    <button id="btnJoinRoom" class="live-btn btn-join" disabled>🚀 Entrar na Sala</button>
+                                    <button id="btnFullscreen" class="live-btn btn-full" disabled>🖥️ Tela Cheia</button>
                                     <button id="btnLeaveRoom" class="live-btn btn-leave hidden">❌ Sair da Aula</button>
                                 </div>
 
@@ -504,8 +505,10 @@
                                 </div>
 
                                 <div class="live-info-box">
-                                    <p>⚠️ <strong>Como funciona:</strong> Ao clicar em "Entrar na Sala", você entra na sala de aula virtual. O Teacher Alex entrará pelo painel do professor. A comunicação é via <strong>WebRTC peer-to-peer</strong>, sem limite de tempo.</p>
-                                    <p>📋 <strong>ID da sua sala:</strong> <span id="roomIdDisplay" class="room-id">—</span></p>
+                                    <p>⚠️ <strong>Passo 1:</strong> Clique em "Entrar na Sala" para conectar.</p>
+                                    <p>⚠️ <strong>Passo 2:</strong> Ative a câmera/áudio quando quiser participar.</p>
+                                    <p>🖥️ Use "Tela Cheia" para melhor visualização.</p>
+                                    <p>📋 <strong>Seu ID:</strong> <span id="roomIdDisplay" class="room-id">—</span></p>
                                 </div>
                             </div>
                         </div>
