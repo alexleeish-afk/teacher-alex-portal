@@ -228,4 +228,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ===== ABRIR MATERIAL DO CURSO EM NOVA ABA =====
+    const btnOpenMaterial = document.getElementById('btnOpenMaterial');
+    if (btnOpenMaterial) {
+        btnOpenMaterial.addEventListener('click', () => {
+            window.open('material/modulo-basico-1.pdf', '_blank');
+        });
+    }
+
 });
