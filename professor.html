@@ -397,12 +397,16 @@
         const TEACHER_PEER_ID = 'teacher-alex-sala-principal';
         const PEER_FALLBACK_CONFIG = { host: '0.peerjs.com', port: 443, path: '/', secure: true };
         const PROFESSOR_PASSWORD = 'ALEX2026'; // Altere essa senha
+        const MAX_RECONNECT_ATTEMPTS = 10;
 
         let peer = null;
         let localStream = null;
         let isMicOn = true;
         let isVideoOn = true;
         let connectedStudents = {}; // { peerId: { name, call, dataConn } }
+        let shouldKeepRoomOpen = false;
+        let reconnectAttempts = 0;
+        let reconnectTimer = null;
 
         // ===== ELEMENTOS =====
         const loginOverlay  = document.getElementById('loginOverlay');
@@ -493,13 +497,38 @@
 
         // ===== ABRIR SALA =====
         btnOpenRoom.addEventListener('click', () => {
+            shouldKeepRoomOpen = true;
+            reconnectAttempts = 0;
             openRoom();
         });
 
+        window.addEventListener('offline', () => {
+            if (!shouldKeepRoomOpen) return;
+            setStatus('Sem internet. Sala será reaberta automaticamente ao voltar.', 'waiting');
+            addChatMsg('Sistema', 'Conexão com a internet perdida. Aguardando retorno...', true);
+        });
+
+        window.addEventListener('online', () => {
+            if (!shouldKeepRoomOpen) return;
+            addChatMsg('Sistema', 'Internet restabelecida. Reabrindo sala automaticamente...', true);
+            scheduleRoomReconnect(300);
+        });
+
         function openRoom() {
+            if (!shouldKeepRoomOpen) return;
+            clearReconnectTimer();
+
+            if (!navigator.onLine) {
+                setStatus('Sem internet. Aguardando conexão para abrir a sala...', 'waiting');
+                scheduleRoomReconnect();
+                return;
+            }
+
+            destroyPeerOnly();
             peer = new Peer(TEACHER_PEER_ID, resolvePeerConfig());
 
             peer.on('open', (id) => {
+                reconnectAttempts = 0;
                 setStatus('🟢 Sala aberta! Aguardando alunos...', 'live');
                 btnOpenRoom.classList.add('hidden');
                 btnCloseRoom.classList.remove('hidden');
@@ -564,8 +593,63 @@
                     setStatus('⚠️ Sala já está aberta em outra aba/dispositivo.', 'waiting');
                 } else {
                     setStatus('Erro: ' + err.message, 'offline');
+                    scheduleRoomReconnect();
                 }
             });
+
+            peer.on('disconnected', () => {
+                if (!shouldKeepRoomOpen) return;
+                setStatus('Conexão instável. Reabrindo sala...', 'waiting');
+                scheduleRoomReconnect();
+            });
+
+            peer.on('close', () => {
+                if (!shouldKeepRoomOpen) return;
+                setStatus('Conexão encerrada. Reabrindo sala...', 'waiting');
+                scheduleRoomReconnect();
+            });
+        }
+
+        function scheduleRoomReconnect(customDelayMs) {
+            if (!shouldKeepRoomOpen) return;
+            if (reconnectTimer) return;
+            if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+                setStatus('Falha ao reabrir sala automaticamente. Clique em "Abrir Sala".', 'offline');
+                btnOpenRoom.classList.remove('hidden');
+                btnOpenRoom.disabled = !localStream;
+                btnCloseRoom.classList.add('hidden');
+                return;
+            }
+
+            reconnectAttempts += 1;
+            const backoffMs = customDelayMs || Math.min(15000, 1200 * Math.pow(1.7, reconnectAttempts));
+            addChatMsg('Sistema', 'Tentativa de reconexão da sala (' + reconnectAttempts + '/' + MAX_RECONNECT_ATTEMPTS + ')...', true);
+
+            reconnectTimer = setTimeout(() => {
+                reconnectTimer = null;
+                openRoom();
+            }, backoffMs);
+        }
+
+        function clearReconnectTimer() {
+            if (!reconnectTimer) return;
+            clearTimeout(reconnectTimer);
+            reconnectTimer = null;
+        }
+
+        function destroyPeerOnly() {
+            if (peer) {
+                peer.destroy();
+                peer = null;
+            }
+            Object.values(connectedStudents).forEach(s => {
+                if (s.call) s.call.close();
+                if (s.dataConn) s.dataConn.close();
+            });
+            connectedStudents = {};
+            updateStudentsList();
+            remoteVideo.srcObject = null;
+            remoteLabel.textContent = 'Aluno';
         }
 
         function resolvePeerConfig() {
@@ -591,6 +675,9 @@
         });
 
         function closeRoom() {
+            shouldKeepRoomOpen = false;
+            reconnectAttempts = 0;
+            clearReconnectTimer();
             // Encerrar todas as chamadas
             Object.values(connectedStudents).forEach(s => {
                 if (s.call) s.call.close();

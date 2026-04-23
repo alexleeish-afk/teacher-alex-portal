@@ -297,12 +297,17 @@
         function initLiveClass(studentName) {
             const TEACHER_PEER_ID = 'teacher-alex-sala-principal';
             const PEER_FALLBACK_CONFIG = { host: '0.peerjs.com', port: 443, path: '/', secure: true };
+            const MAX_RECONNECT_ATTEMPTS = 8;
             let localStream = null;
             let currentCall = null;
             let peer = null;
             let conn = null;
             let isMicOn = true;
             let isVideoOn = true;
+            let roomId = '';
+            let reconnectAttempts = 0;
+            let reconnectTimer = null;
+            let shouldStayConnected = false;
 
             const btnStartCam = document.getElementById('btnStartCam');
             const btnMuteMic = document.getElementById('btnMuteMic');
@@ -322,6 +327,8 @@
 
             // 1️⃣ ENTRAR NA SALA
             btnJoinRoom.addEventListener('click', () => {
+                shouldStayConnected = true;
+                reconnectAttempts = 0;
                 setStatus('Conectando à sala...', 'waiting');
                 startConnection();
             });
@@ -385,40 +392,50 @@
             // SAIR
             btnLeaveRoom.addEventListener('click', leaveRoom);
 
+            // Monitorar internet para reconectar automaticamente
+            window.addEventListener('offline', () => {
+                if (!shouldStayConnected) return;
+                setStatus('Sem internet. Tentando reconectar quando voltar...', 'waiting');
+            });
+
+            window.addEventListener('online', () => {
+                if (!shouldStayConnected) return;
+                addChat('Sistema', 'Internet restabelecida. Reconectando automaticamente...');
+                scheduleReconnect(300);
+            });
+
             // CHAT
             btnSendChat.addEventListener('click', sendChat);
             chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
 
             function startConnection() {
-                const studentId = 'aluno-' + Math.random().toString(36).substr(2, 8);
-                roomIdDisplay.textContent = studentId;
+                if (!shouldStayConnected) return;
 
-                peer = new Peer(studentId, resolvePeerConfig());
+                clearReconnectTimer();
+
+                if (!navigator.onLine) {
+                    setStatus('Sem internet. Aguardando conexão...', 'waiting');
+                    scheduleReconnect();
+                    return;
+                }
+
+                if (!roomId) {
+                    roomId = 'aluno-' + Math.random().toString(36).substr(2, 8);
+                }
+                roomIdDisplay.textContent = roomId;
+
+                peer = new Peer(roomId, resolvePeerConfig());
 
                 peer.on('open', () => {
+                    reconnectAttempts = 0;
                     setStatus('✅ Conectado! Agora ative sua câmera.', 'waiting');
                     addChat('Sistema', 'Você entrou na sala como "' + studentName + '". Ative a câmera para iniciar.');
                     btnJoinRoom.disabled = true;
                     btnStartCam.disabled = false;
                     btnLeaveRoom.classList.remove('hidden');
 
-                    conn = peer.connect(TEACHER_PEER_ID);
-                    if (conn) {
-                        conn.on('open', () => { conn.send({ type: 'join', name: studentName }); });
-                        conn.on('data', (d) => { if (d.type === 'chat') addChat('Teacher Alex', d.message); });
-                    }
-
-                    if (localStream) {
-                        const call = peer.call(TEACHER_PEER_ID, localStream, { metadata: { name: studentName } });
-                        if (call) {
-                            currentCall = call;
-                            call.on('stream', (rs) => {
-                                remoteVideo.srcObject = rs;
-                                setStatus('🟢 Aula ao vivo!', 'live');
-                            });
-                            call.on('close', () => { remoteVideo.srcObject = null; });
-                        }
-                    }
+                    connectTeacherData();
+                    connectTeacherMedia();
 
                     peer.on('call', (ic) => {
                         ic.answer(localStream || new MediaStream());
@@ -434,13 +451,102 @@
                     });
                 });
 
+                peer.on('disconnected', () => {
+                    if (!shouldStayConnected) return;
+                    setStatus('Conexão instável. Reconectando à sala...', 'waiting');
+                    scheduleReconnect();
+                });
+
+                peer.on('close', () => {
+                    if (!shouldStayConnected) return;
+                    setStatus('Conexão encerrada. Reconectando...', 'waiting');
+                    scheduleReconnect();
+                });
+
                 peer.on('error', (err) => {
                     if (err.type === 'peer-unavailable') {
                         setStatus('⏳ Professor ainda não está online. Aguarde.', 'waiting');
                     } else {
                         setStatus('Erro: ' + err.message, 'offline');
+                        scheduleReconnect();
                     }
                 });
+            }
+
+            function connectTeacherData() {
+                conn = peer.connect(TEACHER_PEER_ID);
+                if (!conn) return;
+
+                conn.on('open', () => {
+                    conn.send({ type: 'join', name: studentName });
+                });
+
+                conn.on('data', (d) => {
+                    if (d.type === 'chat') addChat('Teacher Alex', d.message);
+                });
+
+                conn.on('close', () => {
+                    if (!shouldStayConnected) return;
+                    scheduleReconnect();
+                });
+            }
+
+            function connectTeacherMedia() {
+                if (!localStream || !peer || peer.destroyed) return;
+
+                const call = peer.call(TEACHER_PEER_ID, localStream, { metadata: { name: studentName } });
+                if (!call) return;
+
+                currentCall = call;
+                call.on('stream', (rs) => {
+                    remoteVideo.srcObject = rs;
+                    setStatus('🟢 Aula ao vivo!', 'live');
+                });
+                call.on('close', () => {
+                    remoteVideo.srcObject = null;
+                    if (shouldStayConnected) scheduleReconnect();
+                });
+            }
+
+            function scheduleReconnect(customDelayMs) {
+                if (!shouldStayConnected) return;
+                if (reconnectTimer) return;
+                if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+                    setStatus('Não foi possível reconectar automaticamente. Clique em "Entrar na Sala".', 'offline');
+                    btnJoinRoom.disabled = false;
+                    return;
+                }
+
+                reconnectAttempts += 1;
+                const backoffMs = customDelayMs || Math.min(12000, 1000 * Math.pow(1.7, reconnectAttempts));
+                addChat('Sistema', 'Tentando reconectar... (' + reconnectAttempts + '/' + MAX_RECONNECT_ATTEMPTS + ')');
+
+                reconnectTimer = setTimeout(() => {
+                    reconnectTimer = null;
+                    destroyPeerOnly();
+                    startConnection();
+                }, backoffMs);
+            }
+
+            function clearReconnectTimer() {
+                if (!reconnectTimer) return;
+                clearTimeout(reconnectTimer);
+                reconnectTimer = null;
+            }
+
+            function destroyPeerOnly() {
+                if (currentCall) {
+                    currentCall.close();
+                    currentCall = null;
+                }
+                if (conn) {
+                    conn.close();
+                    conn = null;
+                }
+                if (peer) {
+                    peer.destroy();
+                    peer = null;
+                }
             }
 
             function resolvePeerConfig() {
@@ -461,9 +567,10 @@
             }
 
             function leaveRoom() {
-                if (currentCall) currentCall.close();
-                if (conn) conn.close();
-                if (peer) peer.destroy();
+                shouldStayConnected = false;
+                reconnectAttempts = 0;
+                clearReconnectTimer();
+                destroyPeerOnly();
                 if (localStream) { localStream.getTracks().forEach(t => t.stop()); localStream = null; }
                 localVideo.srcObject = null;
                 remoteVideo.srcObject = null;
