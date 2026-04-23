@@ -387,6 +387,7 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <script>
         // =============================================
@@ -394,6 +395,7 @@
         // =============================================
 
         const TEACHER_PEER_ID = 'teacher-alex-sala-principal';
+        const PEER_FALLBACK_CONFIG = { host: '0.peerjs.com', port: 443, path: '/', secure: true };
         const PROFESSOR_PASSWORD = 'ALEX2026'; // Altere essa senha
 
         let peer = null;
@@ -495,12 +497,7 @@
         });
 
         function openRoom() {
-            peer = new Peer(TEACHER_PEER_ID, {
-                host: '0.peerjs.com',
-                port: 443,
-                path: '/',
-                secure: true
-            });
+            peer = new Peer(TEACHER_PEER_ID, resolvePeerConfig());
 
             peer.on('open', (id) => {
                 setStatus('🟢 Sala aberta! Aguardando alunos...', 'live');
@@ -569,6 +566,23 @@
                     setStatus('Erro: ' + err.message, 'offline');
                 }
             });
+        }
+
+        function resolvePeerConfig() {
+            try {
+                const baseUrl = (window.TEACHER_ALEX_API_BASE_URL || '').trim();
+                if (!baseUrl) return PEER_FALLBACK_CONFIG;
+
+                const apiUrl = new URL(baseUrl);
+                return {
+                    host: apiUrl.hostname,
+                    port: apiUrl.port ? Number(apiUrl.port) : (apiUrl.protocol === 'https:' ? 443 : 80),
+                    path: '/peerjs',
+                    secure: apiUrl.protocol === 'https:',
+                };
+            } catch (_error) {
+                return PEER_FALLBACK_CONFIG;
+            }
         }
 
         // ===== FECHAR SALA =====

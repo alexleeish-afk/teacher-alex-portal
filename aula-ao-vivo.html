@@ -280,6 +280,7 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <script>
         // ===== VERIFICAR ACESSO =====
@@ -295,6 +296,7 @@
 
         function initLiveClass(studentName) {
             const TEACHER_PEER_ID = 'teacher-alex-sala-principal';
+            const PEER_FALLBACK_CONFIG = { host: '0.peerjs.com', port: 443, path: '/', secure: true };
             let localStream = null;
             let currentCall = null;
             let peer = null;
@@ -391,7 +393,7 @@
                 const studentId = 'aluno-' + Math.random().toString(36).substr(2, 8);
                 roomIdDisplay.textContent = studentId;
 
-                peer = new Peer(studentId, { host: '0.peerjs.com', port: 443, path: '/', secure: true });
+                peer = new Peer(studentId, resolvePeerConfig());
 
                 peer.on('open', () => {
                     setStatus('✅ Conectado! Agora ative sua câmera.', 'waiting');
@@ -439,6 +441,23 @@
                         setStatus('Erro: ' + err.message, 'offline');
                     }
                 });
+            }
+
+            function resolvePeerConfig() {
+                try {
+                    const baseUrl = (window.TEACHER_ALEX_API_BASE_URL || '').trim();
+                    if (!baseUrl) return PEER_FALLBACK_CONFIG;
+
+                    const apiUrl = new URL(baseUrl);
+                    return {
+                        host: apiUrl.hostname,
+                        port: apiUrl.port ? Number(apiUrl.port) : (apiUrl.protocol === 'https:' ? 443 : 80),
+                        path: '/peerjs',
+                        secure: apiUrl.protocol === 'https:',
+                    };
+                } catch (_error) {
+                    return PEER_FALLBACK_CONFIG;
+                }
             }
 
             function leaveRoom() {

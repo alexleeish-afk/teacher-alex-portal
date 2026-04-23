@@ -5,6 +5,8 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+const http = require('http');
+const { ExpressPeerServer } = require('peer');
 require('dotenv').config();
 
 const app = express();
@@ -36,6 +38,11 @@ const corsOptions = {
     credentials: true,
 };
 
+const peerServerCors = {
+    origin: allowedOrigins.length === 0 ? '*' : allowedOrigins,
+    credentials: true,
+};
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
@@ -54,6 +61,15 @@ app.use(
 );
 
 app.use(express.static(ROOT_DIR));
+
+const httpServer = http.createServer(app);
+const peerServer = ExpressPeerServer(httpServer, {
+    path: '/',
+    proxied: true,
+    corsOptions: peerServerCors,
+});
+
+app.use('/peerjs', peerServer);
 
 async function ensureDataStore() {
     await fs.promises.mkdir(DATA_DIR, { recursive: true });
@@ -288,7 +304,7 @@ app.get('*', (_req, res) => {
 });
 
 ensureDataStore().then(() => {
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
         console.log(`Teacher Alex portal disponível em http://localhost:${PORT}`);
     });
 });
